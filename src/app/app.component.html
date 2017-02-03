@@ -1,3 +1,30 @@
-<h1>
-  {{title}}
-</h1>
+
+<nav *ngIf="navbarVisible" class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="">{{ project_web_name }}</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="accounts" routerLinkActive="active">Accounts</a></li>
+        <li><a routerLink="" routerLinkActive="active">Groups</a></li>
+        <li><a routerLink="organizations" routerLinkActive="active">Organizations</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a [routerLink]="['auth', 'logout']" routerLinkActive="active">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
