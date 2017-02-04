@@ -32,12 +32,10 @@
                                 </div>
                             </fieldset>
                             <div class="text-center row">
-                                <button *ngIf="!LoginLoading" [disabled]="!form.valid" type="submit" class="btn btn-link">
-                                    Sign in!
+                                <button [disabled]="!form.valid" type="submit" class="btn btn-link">
+                                    <span *ngIf="!LoginLoading">Sign in!</span>
+                                    <span *ngIf="LoginLoading"><i class="fa fa-spinner fa-spin"></i>  Loading</span>
                                 </button>
-                                <div *ngIf="LoginLoading" class="panel-body text-center">
-                                    <i class="fa fa-spinner fa-spin"></i>  Loading ...
-                                </div>
                             </div>
                         </form>
 
