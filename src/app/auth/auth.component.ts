@@ -23,6 +23,7 @@ export class AuthComponent implements OnInit, OnDestroy{
     private form: FormGroup;
     private accountDetail = new Account();
     private myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
+    public LoginLoading = false;
     private sub;
 
     constructor(
@@ -55,16 +56,20 @@ export class AuthComponent implements OnInit, OnDestroy{
     Login(){
         var token;
 
+        this.LoginLoading = true;
+
         this._auth.Login(this.accountDetail.email, this.accountDetail.password)
             .subscribe(
                 data => token = data._token,
                 response => {
+                    this.LoginLoading = false;
                     alert(JSON.parse(response._body).message);
                 },
                 () => {
                     this._storage.SetToken(token);
                     this.alertService.getMessage();
                     this._router.navigate(['']);
+                    this.LoginLoading = false;
                 }
             );
     }
