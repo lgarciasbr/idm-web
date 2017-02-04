@@ -12,6 +12,7 @@ import { AlertService } from './shared/alert.service';
 
 export class AppComponent implements OnInit{
   navbarVisible;
+  public isCollapsed: boolean = true;
   project_web_name = environment.project_web_name;
   message;
 

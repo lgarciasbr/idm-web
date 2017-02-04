@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { CollapseDirective } from 'ng2-bootstrap';
 import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,7 +25,8 @@ import { AppRouting } from './app.routing';
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CollapseDirective
   ],
   imports: [
     LocalStorageModule.withConfig({
