@@ -7,13 +7,23 @@
 }
 
 .page-title-height {
-    height: 70px;
+    height: 100px;
     padding-bottom: 65px;
+}
+
+
+/* top content, visible on every page */
+@media screen and (max-width: 1199px) {
+  div[class*="col-lg-"] .top-content {
+    text-align: center;
+  }
 }
 
 .top-content {
   text-align: right;
   margin-bottom: 0px;
+  /* dashboard only */
+  /* every page except dashboard */
 }
 .top-content ul.mini-stat {
   display: inline-block;
@@ -23,7 +33,11 @@
   *display: inline;
   margin-bottom: 0;
 }
-
+@media screen and (max-width: 992px) {
+  .top-content ul.mini-stat {
+    display: block;
+  }
+}
 .top-content ul.mini-stat > li {
   border-left: 1px solid #ddd;
   padding-left: 15px;
@@ -32,7 +46,19 @@
 .top-content ul.mini-stat > li:first-child {
   border-left: none;
 }
-
+@media screen and (max-width: 992px) {
+  .top-content ul.mini-stat > li {
+    width: 100%;
+    border-left: none;
+    padding-bottom: 15px;
+  }
+}
+@media screen and (min-width: 992px) {
+  .top-content ul.mini-stat > li {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
 .top-content ul.mini-stat h5 {
   float: left;
   margin: 0;
@@ -65,6 +91,11 @@
 .top-content ul.quick-access > li {
   width: 15em;
   padding: 0;
+}
+@media screen and (max-width: 768px) {
+  .top-content ul.quick-access > li {
+    width: 100%;
+  }
 }
 .top-content ul.quick-access > li a, .top-content ul.quick-access > li a:focus, .top-content ul.quick-access > li a:hover {
   text-decoration: none;
