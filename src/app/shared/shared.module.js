@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var pagination_component_1 = require('./pagination.component');
-var page_header_component_1 = require('./page_header.component');
+var page_header_component_1 = require('./page.title.component.ts');
 var SharedModule = (function () {
     function SharedModule() {
     }

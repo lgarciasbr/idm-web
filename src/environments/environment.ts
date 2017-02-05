@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-    project_web_name: 'LG idM'
+    projectWebName: 'LG idM'
 };

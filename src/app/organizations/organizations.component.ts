@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 })
 
 export class OrganizationsComponent  {
-    page_title = 'Organizations';
-    sub_title = 'Make it easy to share apps.';
-    loadingVisible = false;
+    title = 'Organizations';
+    subTitle = 'Make it easy to share apps.';
+    isLoadingVisible = false;
 }

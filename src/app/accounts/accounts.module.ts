@@ -10,7 +10,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AccountsComponent } from './accounts.component';
 
 import { AccountsService } from './accounts.service';
-import { PreventUnsavedChangesGuard } from '../shared/prevent-unsaved-changes-guard.service';
 
 @NgModule({
     imports: [
@@ -28,9 +27,9 @@ import { PreventUnsavedChangesGuard } from '../shared/prevent-unsaved-changes-gu
         AccountsComponent
     ],
     providers: [
-        AccountsService,
-        PreventUnsavedChangesGuard
+        AccountsService
     ]
 })
+
 export class AccountsModule {
 }

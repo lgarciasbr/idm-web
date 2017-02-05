@@ -1,35 +1,33 @@
 import { NgModule } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import { PaginationComponent } from './pagination.component';
-import { PageHeaderComponent } from './page_header.component';
+import { CollapseDirective } from 'ng2-bootstrap';
 
-import {AuthGuard} from './auth-guard.service'
-import {Http_Header} from './http_header.service'
-import {LocalStorage} from './local_storage.service'
-import {AlertService} from './alert.service'
+import { PageNavbarComponent } from './page.navbar.component';
+import { PageTitleComponent } from './page.title.component';
+
+import { LocalStorage } from './local.storage.service'
 
 import { FocusDirective } from './focus.directive'
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   declarations: [
-    PaginationComponent,
-    PageHeaderComponent,
+    CollapseDirective,
+    PageNavbarComponent,
+    PageTitleComponent,
     FocusDirective
   ],
   providers: [
-    AuthGuard,
-    Http_Header,
-    LocalStorage,
-    AlertService
+    LocalStorage
   ],
   exports: [
-    PaginationComponent,
-    PageHeaderComponent,
+    PageNavbarComponent,
+    PageTitleComponent,
     FocusDirective
   ]
 })

@@ -1,15 +1,16 @@
-import { NgModule }            from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import { CommonModule }        from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule }        from '@angular/router';
-import { HttpModule }          from '@angular/http';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import {SharedModule} from '../shared/shared.module';
 
 import { AuthComponent } from './auth.component'
 
 import { AuthService } from './auth.service'
+import { AuthGuard } from './auth.guard.service'
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { AuthService } from './auth.service'
     AuthComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard
   ]
 })
 

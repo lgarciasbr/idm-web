@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html'
 })
 
 export class HomeComponent implements OnInit{
-  page_title = 'Identity Manager';
-  sub_title = '';
-  loadingVisible = false;
+  title = 'Identity Manager';
+  subTitle = 'Access the right resources.';
+  isLoadingVisible = false;
 
   constructor(
     private _activeRoute: ActivatedRoute,

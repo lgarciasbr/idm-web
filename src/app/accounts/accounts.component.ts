@@ -1,13 +1,14 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import any = jasmine.any;
-import {EventEmitter} from "@angular/common/src/facade/async";
+import { EventEmitter } from "@angular/common/src/facade/async";
 
 import { AccountsService } from './accounts.service';
 
-import { BasicValidators } from '../shared/basicValidators';
+import { BasicValidators } from '../shared/basic.validators';
 import { Account } from './account'
+
+import any = jasmine.any;
 
 @Component({
   selector: 'accounts',
@@ -15,9 +16,9 @@ import { Account } from './account'
 })
 
 export class AccountsComponent implements OnInit{
-  page_title = 'Account';
-  sub_title = 'Manage your accounts.';
-  loadingVisible = false;
+  title = 'Account';
+  subTitle = 'Manage your accounts.';
+  isLoadingVisible = false;
   selectedRow = null;
   form: FormGroup;
   accountAddVisible = false;
@@ -55,19 +56,18 @@ export class AccountsComponent implements OnInit{
   }
 
   Save(){
-    this.loadingVisible = true;
+    this.isLoadingVisible = true;
 
     this._service.addUser(this.accountDetail)
       .subscribe(
         null,
         response => {
           if (response.status == 403) {
-            this.loadingVisible = false;
+            this.isLoadingVisible = false;
             this._router.navigate(['auth', 'logout']);
           }
-          else if (response.status == 500 || response.status == 400)
-          {
-            this.loadingVisible = false;
+          else if (response.status == 500 || response.status == 400) {
+            this.isLoadingVisible = false;
             alert(JSON.parse(response._body).message);
           }
         },
@@ -75,7 +75,7 @@ export class AccountsComponent implements OnInit{
           this.form.reset();
           this.accountAddVisible = false;
           this.accountDetailVisible = true;
-          this.loadingVisible = false;
+          this.isLoadingVisible = false;
           this.getUsers();
         });
   }
@@ -87,7 +87,7 @@ export class AccountsComponent implements OnInit{
   }
 
   getUsers(page?){
-    this.loadingVisible = true;
+    this.isLoadingVisible = true;
 
     // If some row was selected.
     this.selectedRow = null;
@@ -97,23 +97,23 @@ export class AccountsComponent implements OnInit{
         data => this.accounts = data.accounts,
         response => {
           if (response.status == 403) {
-            this.loadingVisible = false;
+            this.isLoadingVisible = false;
             this._router.navigate(['auth', 'logout']);
           }
-          else if (response.status == 500 || response.status == 400)
-          {
-            this.loadingVisible = false;
+          else if (response.status == 500 || response.status == 400) {
+            this.isLoadingVisible = false;
             alert(JSON.parse(response._body).message);
           }
         },
         () => {
-          this.loadingVisible = false;
+          this.isLoadingVisible = false;
+          this.accountDetail = new Account();
         }
       );
   }
 
   getUser(account){
-    this.loadingVisible = true;
+    this.isLoadingVisible = true;
 
     this.accountAddVisible = false;
     this.accountDetailVisible = true;
@@ -125,21 +125,20 @@ export class AccountsComponent implements OnInit{
         data => this.accountDetail = data.account,
         response => {
           if (response.status == 404) {
-            this.loadingVisible = false;
+            this.isLoadingVisible = false;
             alert("Account not found.");
           }
           else if (response.status == 403) {
-            this.loadingVisible = false;
+            this.isLoadingVisible = false;
             this._router.navigate(['auth', 'logout']);
           }
-          else
-          {
-            this.loadingVisible = false;
+          else {
+            this.isLoadingVisible = false;
             alert(JSON.parse(response._body).message);
           }
         },
         () => {
-          this.loadingVisible = false;
+          this.isLoadingVisible = false;
           window.location.hash ='DivDetails';
         }
       );
@@ -148,28 +147,27 @@ export class AccountsComponent implements OnInit{
   deleteUser(accountDetail){
     if (accountDetail.email != null &&
       confirm("Are you sure you want to delete " + accountDetail.email + "?")) {
-
-      this.loadingVisible = true;
+      this.isLoadingVisible = true;
 
       this._service.deleteUser(accountDetail)
         .subscribe(null,
           response => {
             if (response.status == 404) {
-              this.loadingVisible = false;
+              this.isLoadingVisible = false;
               alert("Could not delete the account.");
             }
             else if (response.status == 403) {
-              this.loadingVisible = false;
+              this.isLoadingVisible = false;
               this._router.navigate(['auth', 'logout']);
             }
             else
             {
-              this.loadingVisible = false;
+              this.isLoadingVisible = false;
               alert(JSON.parse(response._body).message);
             }
           },
           () => {
-            this.loadingVisible = false;
+            this.isLoadingVisible = false;
             this.accountDetail = new Account();
             this.getUsers();
           }

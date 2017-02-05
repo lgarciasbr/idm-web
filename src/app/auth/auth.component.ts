@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {EventEmitter} from "@angular/common/src/facade/async";
+import { EventEmitter } from "@angular/common/src/facade/async";
 
 import { environment } from '../../environments/environment';
 
-import { BasicValidators } from '../shared/basicValidators';
+import { BasicValidators } from '../shared/basic.validators';
 import { Account } from '../accounts/account'
 
-import { LocalStorage } from '../shared/local_storage.service';
-import { AlertService } from '../shared/alert.service';
+import { LocalStorage } from '../shared/local.storage.service';
 
 import { AuthService } from './auth.service'
 
@@ -19,11 +18,11 @@ import { AuthService } from './auth.service'
 })
 
 export class AuthComponent implements OnInit, OnDestroy{
-    project_web_name = environment.project_web_name;
+    projectWebName = environment.projectWebName;
     private form: FormGroup;
     private accountDetail = new Account();
     private myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
-    public LoginLoading = false;
+    public isLoginLoading = false;
     private sub;
 
     constructor(
@@ -31,9 +30,7 @@ export class AuthComponent implements OnInit, OnDestroy{
         private _storage: LocalStorage,
         private _router: Router,
         private _activeRoute: ActivatedRoute,
-        private _auth: AuthService,
-        private alertService: AlertService
-    ){
+        private _auth: AuthService){
         this.form = fb.group({
             email: ['', BasicValidators.email],
             password: ['', Validators.required]
@@ -56,20 +53,19 @@ export class AuthComponent implements OnInit, OnDestroy{
     Login(){
         var token;
 
-        this.LoginLoading = true;
+        this.isLoginLoading = true;
 
         this._auth.Login(this.accountDetail.email, this.accountDetail.password)
             .subscribe(
                 data => token = data._token,
                 response => {
-                    this.LoginLoading = false;
+                    this.isLoginLoading = false;
                     alert(JSON.parse(response._body).message);
                 },
                 () => {
                     this._storage.SetToken(token);
-                    this.alertService.getMessage();
                     this._router.navigate(['']);
-                    this.LoginLoading = false;
+                    this.isLoginLoading = false;
                 }
             );
     }
@@ -82,7 +78,6 @@ export class AuthComponent implements OnInit, OnDestroy{
                     response => {
                         if (response.status == 403) {
                             this._storage.DeleteToken();
-                            this.alertService.getMessage();
                             this._router.navigate(['auth']);
                         }
                         else {
@@ -91,7 +86,6 @@ export class AuthComponent implements OnInit, OnDestroy{
                     },
                     () => {
                         this._storage.DeleteToken();
-                        this.alertService.getMessage();
                         this._router.navigate(['auth']);
                     }
                 )

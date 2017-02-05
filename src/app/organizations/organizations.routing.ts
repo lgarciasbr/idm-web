@@ -2,7 +2,7 @@ import { RouterModule } from '@angular/router';
 
 import { OrganizationsComponent } from './organizations.component';
 
-import { AuthGuard } from '../shared/auth-guard.service'
+import { AuthGuard } from '../auth/auth.guard.service'
 
 export const OrganizationsRouting = RouterModule.forChild([
     {
