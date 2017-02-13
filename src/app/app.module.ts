@@ -9,7 +9,7 @@ import { HttpModule } from '@angular/http';
 import { AuthModule } from './auth/auth.module'
 import { AccountsModule } from './accounts/accounts.module';
 import { HomeModule } from './home/home.module';
-import { OrganizationsModule } from './organizations/organizations.module';
+import { CompanyModule } from './company/company.module';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
@@ -17,7 +17,7 @@ import { NotFoundComponent } from './not-found.component';
 
 import { AuthRouting } from './auth/auth.routing'
 import { AccountsRouting } from './accounts/accounts.routing';
-import { OrganizationsRouting } from './organizations/organizations.routing';
+import { CompanyRouting } from './company/company.routing';
 import { HomeRouting } from './home/home.routing';
 import { AppRouting } from './app.routing';
 
@@ -37,12 +37,12 @@ import { AppRouting } from './app.routing';
     AuthModule,
     AccountsModule,
     HomeModule,
-    OrganizationsModule,
+    CompanyModule,
     SharedModule,
     AuthRouting,
     AccountsRouting,
     HomeRouting,
-    OrganizationsRouting,
+    CompanyRouting,
     AppRouting
   ],
   providers: [

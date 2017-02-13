@@ -23,7 +23,7 @@ import { environment } from '../../environments/environment';
                         <ul class="nav navbar-nav">
                             <li><a routerLink="/accounts" routerLinkActive="active" (click)="isCollapsed = !isCollapsed">Accounts</a></li>
                             <li><a routerLink="/groups" routerLinkActive="active" (click)="isCollapsed = !isCollapsed">Groups</a></li>
-                            <li><a routerLink="/organizations" routerLinkActive="active" (click)="isCollapsed = !isCollapsed">Organizations</a></li>
+                            <li><a routerLink="/company" routerLinkActive="active" (click)="isCollapsed = !isCollapsed">Company</a></li>
                         </ul>
             
                         <ul class="nav navbar-nav navbar-right">

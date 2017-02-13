@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: './organizations.component.html'
+    templateUrl: 'company.component.html'
 })
 
-export class OrganizationsComponent  {
+export class CompanyComponent  {
     title = 'Organizations';
     subTitle = 'Make it easy to share apps.';
     isLoadingVisible = false;

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { OrganizationsComponent } from './organizations.component';
+import { CompanyComponent } from './company.component';
 
 @NgModule({
     imports: [
@@ -12,16 +12,16 @@ import { OrganizationsComponent } from './organizations.component';
         SharedModule
     ],
     declarations: [
-        OrganizationsComponent
+        CompanyComponent
     ],
     exports: [
-        OrganizationsComponent
+        CompanyComponent
     ],
     providers: [
 
     ]
 })
 
-export class OrganizationsModule {
+export class CompanyModule {
 
 }
