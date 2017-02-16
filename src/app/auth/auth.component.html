@@ -2,10 +2,10 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3 text">
-            <h3><strong>{{ projectWebName }}</strong> Login Form</h3>
+            <h3><strong>{{ projectWebName }} |</strong> Identity Manager</h3>
             <div class="description">
                 <p>
-                    Enter your e-mail and password to log on, if don't have an account <a>click here to <strong>REGISTER</strong></a>.
+                    Enter your e-mail and password to log on, if don't have an account, register now.
                 </p>
             </div>
 
@@ -35,23 +35,33 @@
                                 <button [disabled]="!form.valid" type="submit" class="btn btn-link">
                                     <span>Sign in!</span>
                                 </button>
+                                <button [disabled]="!form.valid" type="submit" class="btn btn-link">
+                                    <span>Register</span>
+                                </button>
                             </div>
                         </form>
 
                     </div>
                 </div>
+
+                <br>
+                
                 <div class="row">
-                    <div class="col-sm-7 col-sm-offset-3">
+                    <div class="col-sm-6 col-sm-offset-3">
                         <h4>...or login with:</h4>
-                        <div class="social-login-buttons">
+                        <div class="social-login-buttons text-center">
                             <a class="btn btn-link" href="#">
                                 <i class="fa fa-facebook"></i> Facebook
                             </a>
                             <a class="btn btn-link" href="#">
                                 <i class="fa fa-twitter"></i> Twitter
                             </a>
+                            <br>
                             <a class="btn btn-link" href="#">
-                                <i class="fa fa-google-plus"></i> Google Plus
+                                <i class="fa fa-google"></i> Google Plus
+                            </a>
+                            <a class="btn btn-link" href="#">
+                                <i class="fa fa-linkedin"></i> LinkedIn
                             </a>
                         </div>
                     </div>

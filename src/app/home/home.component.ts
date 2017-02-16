@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class HomeComponent implements OnInit{
   title = 'Identity Manager';
-  subTitle = 'Access the right resources.';
+  subTitle = 'Access right resources.';
   isLoadingVisible = false;
 
   constructor(
