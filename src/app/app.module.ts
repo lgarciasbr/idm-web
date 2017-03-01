@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 
 import { AuthModule } from './auth/auth.module'
 import { AccountsModule } from './accounts/accounts.module';
+import { GroupsModule } from './groups/groups.module';
 import { HomeModule } from './home/home.module';
 import { CompanyModule } from './company/company.module';
 import { SharedModule } from './shared/shared.module';
@@ -17,6 +18,7 @@ import { NotFoundComponent } from './not-found.component';
 
 import { AuthRouting } from './auth/auth.routing'
 import { AccountsRouting } from './accounts/accounts.routing';
+import { GroupsRouting } from './groups/groups.routing';
 import { CompanyRouting } from './company/company.routing';
 import { HomeRouting } from './home/home.routing';
 import { AppRouting } from './app.routing';
@@ -36,11 +38,13 @@ import { AppRouting } from './app.routing';
     HttpModule,
     AuthModule,
     AccountsModule,
+    GroupsModule,
     HomeModule,
     CompanyModule,
     SharedModule,
     AuthRouting,
     AccountsRouting,
+    GroupsRouting,
     HomeRouting,
     CompanyRouting,
     AppRouting

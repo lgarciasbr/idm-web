@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 import { LocalStorage } from '../shared/local.storage.service';
 
 @Injectable()
-export class AccountsService {
-  private _url = "http://127.0.0.1:5000/accounts/";
+export class GroupsService {
+  private _url = "http://127.0.0.1:5000/groups/";
 
   constructor(
     private _http: Http,
@@ -28,22 +28,22 @@ export class AccountsService {
     return options
   }
 
-  getUsers(page?){
+  getGroups(page?){
     return this._http.get(this._url + '?page=' + page + '&per_page=15', this.GetHeader())
       .map(res => res.json());
   }
 
-  getUser(account){
+  getGroup(account){
     return this._http.get(account._url, this.GetHeader())
       .map(res => res.json());
   }
 
-  addUser(account){
+  addGroup(account){
     return this._http.post(this._url, JSON.stringify(account), this.GetHeader())
       .map(res => res.json());
   }
 
-  deleteUser(account){
+  deleteGroup(account){
     return this._http.delete(account._url, this.GetHeader())
       .map(res => res.json());
   }

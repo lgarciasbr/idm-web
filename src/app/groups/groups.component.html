@@ -1,0 +1,75 @@
+<page-navbar></page-navbar>
+
+<page-title [title]="title" [subTitle]="subTitle" [isLoadingVisible]="isLoadingVisible"></page-title>
+
+<div class="row">
+
+  <div class="col-xs-20 col-sm-7 col-md-7 col-lg-7">
+    <div class="navbar-left">
+      <h4>Groups List</h4>
+    </div>
+
+    <div class="navbar-right">
+      <button  (click)="ShowAddGroup()" class="btn btn-link">
+        <i class="fa fa-users" aria-hidden="true"></i> add new group
+      </button>
+      <button  (click)="getGroups()" class="btn btn-link">
+        <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i> refresh
+      </button>
+    </div>
+
+    <table class="table table-hover table-condensed">
+      <tbody>
+      <tr *ngFor="let group of groups, let i=index"
+          (click)="getGroup(group)">
+        <td [ngClass]="{'active': i == selectedRow, 'clickable': true}">
+          {{ group.name }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="col-md-5 col-sm-5 col-lg-5">
+
+    <div *ngIf="groupDetailVisible" id="DivDetails" [focus]="myFocusTriggeringEventEmitter">
+      <h4>Group Details</h4>
+      <p>name:
+        {{groupDetail.name}}</p>
+      <p>created at:
+        {{groupDetail._created_at | date: 'dd/MM/yyyy hh:mm'}}
+      </p>
+      <div class="text-center row">
+        <button [disabled]="groupDetail.name == empty" (click)="deleteGroup(groupDetail)" type="button" class="btn btn-link">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> delete this group
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="groupAddVisible">
+      <h4>Add Group</h4>
+      <form [formGroup]="form" (ngSubmit)="Save()">
+        <fieldset>
+          <div class="form-group">
+            <label class="sr-only">name:</label>
+            <input [(ngModel)]="groupDetail.name" #email [focus]="myFocusTriggeringEventEmitter" placeholder="name" formControlName="name" type="text" class="form-control">
+            <div *ngIf="email.touched" class="alert alert-danger">
+              Please type a valid name.
+            </div>
+          </div>
+        </fieldset>
+        <div class="text-center row">
+          <button [disabled]="!form.valid" type="submit" class="btn btn-link">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Add
+          </button>
+          <button (click)="Cancel()" type="cancel" class="btn btn-link">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
