@@ -7,7 +7,7 @@ import { LocalStorage } from '../shared/local.storage.service';
 
 @Injectable()
 export class GroupsService {
-  private _url = "http://127.0.0.1:5000/groups/";
+  private _url = "https://lgidm.herokuapp.com/groups/";
 
   constructor(
     private _http: Http,
