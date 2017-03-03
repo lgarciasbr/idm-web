@@ -3,4 +3,5 @@ export class Account {
     _created_at: string;
     email: string;
     password: string;
+    _avatar: string;
 }
