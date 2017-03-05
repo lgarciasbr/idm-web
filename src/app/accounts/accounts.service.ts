@@ -29,7 +29,7 @@ export class AccountsService {
   }
 
   getUsers(page?){
-    return this._http.get(this._url + '?page=' + page + '&per_page=11', this.GetHeader())
+    return this._http.get(this._url + '?page=' + page + '&per_page=12', this.GetHeader())
       .map(res => res.json());
   }
 

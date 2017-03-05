@@ -23,6 +23,7 @@
         <input type="text" class="form-control">
 
         <br>
+        <br>
 
         <table class="table table-hover table-condensed">
             <tbody>
@@ -35,24 +36,36 @@
             </tbody>
         </table>
 
-        <div class="text-center">
-            <ul  class="pagination">
+        <div *ngIf="pages != 1" class="text-center">
+
+            <ul class="pagination pagination-sm">
                 <li [ngClass]="{disabled:page === 1}">
-                    <a (click)="getUsers(1)">First</a>
+                    <a (click)="getUsers(1)">first page</a>
                 </li>
+            </ul>
+
+            <ul  class="pagination pagination-sm">
                 <li [ngClass]="{disabled:page === 1}">
-                    <a (click)="getUsers(page - 1)">Previous</a>
+                    <a (click)="getUsers(page - 1)">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                    </a>
                 </li>
                 <li *ngFor="let pageNumber of pagesArray" [ngClass]="{active:page === pageNumber}">
                     <a (click)="getUsers(pageNumber)">{{pageNumber}}</a>
                 </li>
                 <li [ngClass]="{disabled:page === pages}">
-                    <a (click)="getUsers(page + 1)">Next</a>
-                </li>
-                <li [ngClass]="{disabled:page === pages}">
-                    <a (click)="getUsers(pages)">Last</a>
+                    <a (click)="getUsers(page + 1)">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                    </a>
                 </li>
             </ul>
+
+            <ul class="pagination pagination-sm">
+                <li [ngClass]="{disabled:page === pages}">
+                    <a (click)="getUsers(pages)">last page</a>
+                </li>
+            </ul>
+
         </div>
 
     </div>
