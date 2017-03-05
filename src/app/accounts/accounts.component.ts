@@ -17,15 +17,18 @@ import any = jasmine.any;
 })
 
 export class AccountsComponent implements OnInit{
-    title = 'Account';
-    subTitle = 'Manage your accounts.';
-    isLoadingVisible = false;
-    selectedRow = null;
+    public title = 'Account';
+    public subTitle = 'Manage your accounts.';
+    public isLoadingVisible = false;
+    public selectedRow = null;
     form: FormGroup;
     accountAddVisible = false;
-    accountDetailVisible = true;
+    accountDetailVisible = false;
     accountDetail = new Account();
-    accounts: any[];
+    public accounts: any[];
+    public pagesArray: any[];
+    public pages;
+    public page;
     myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
     constructor(
@@ -77,7 +80,7 @@ export class AccountsComponent implements OnInit{
                 () => {
                     this.form.reset();
                     this.accountAddVisible = false;
-                    this.accountDetailVisible = true;
+                    // this.accountDetailVisible = true;
                     this.isLoadingVisible = false;
                     this.getUsers();
                 });
@@ -86,18 +89,21 @@ export class AccountsComponent implements OnInit{
     Cancel(){
         this.form.reset();
         this.accountAddVisible = false;
-        this.accountDetailVisible = true;
+        // this.accountDetailVisible = true;
     }
 
     getUsers(page?){
+        this.accountDetailVisible = false;
         this.isLoadingVisible = true;
 
         // If some row was selected.
         this.selectedRow = null;
 
+        var responseData;
+
         this._service.getUsers(page)
             .subscribe(
-                data => this.accounts = data.accounts,
+                data => responseData = data,
                 response => {
                     if (response.status == 403) {
                         this.isLoadingVisible = false;
@@ -109,9 +115,46 @@ export class AccountsComponent implements OnInit{
                     }
                 },
                 () => {
+                    this.accounts = responseData.accounts;
+                    this.pages = responseData.pages.pages;
+                    this.page = responseData.pages.page;
                     this.isLoadingVisible = false;
                     this.accountDetail = new Account();
                     this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+
+                    if (this.pages > 5){
+                        this.pagesArray = new Array(5);
+                        var maxPage;
+                        var minPage;
+
+                        if (this.page >= 4 && this.page + 2 <= this.pages)
+                            minPage = this.page - 2;
+                        else if (this.page + 2 >= this.pages)
+                            minPage = this.pages - 4;
+                        else
+                            minPage = 1;
+
+                        if (this.page < 4)
+                            maxPage = 5
+                        else if (this.page + 2 < this.pages)
+                            maxPage = this.page + 2;
+                        else
+                            maxPage = this.pages;
+
+                        for (var i = 0; i <= 5; i++) {
+                            if (minPage <= maxPage)
+                                this.pagesArray[i] = minPage;
+
+                            minPage++;
+                        }
+                    }
+                    else {
+                        this.pagesArray = new Array(this.pages)
+
+                        for (var i = 1; i <= this.pages; i++) {
+                            this.pagesArray[i-1] = i;
+                        }
+                    }
                 }
             );
     }

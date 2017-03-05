@@ -18,6 +18,12 @@
             </button>
         </div>
 
+        <br>
+
+        <input type="text" class="form-control">
+
+        <br>
+
         <table class="table table-hover table-condensed">
             <tbody>
             <tr *ngFor="let account of accounts, let i=index"
@@ -29,22 +35,54 @@
             </tbody>
         </table>
 
+        <div class="text-center">
+            <ul  class="pagination">
+                <li [ngClass]="{disabled:page === 1}">
+                    <a (click)="getUsers(1)">First</a>
+                </li>
+                <li [ngClass]="{disabled:page === 1}">
+                    <a (click)="getUsers(page - 1)">Previous</a>
+                </li>
+                <li *ngFor="let pageNumber of pagesArray" [ngClass]="{active:page === pageNumber}">
+                    <a (click)="getUsers(pageNumber)">{{pageNumber}}</a>
+                </li>
+                <li [ngClass]="{disabled:page === pages}">
+                    <a (click)="getUsers(page + 1)">Next</a>
+                </li>
+                <li [ngClass]="{disabled:page === pages}">
+                    <a (click)="getUsers(pages)">Last</a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
     <div class="col-md-5 col-sm-5 col-lg-5">
 
         <div *ngIf="accountDetailVisible" id="DivDetails" [focus]="myFocusTriggeringEventEmitter">
-            <h4>Account Details</h4>
+            <!--<h4>Account Details</h4>-->
             <br>
             <div class="text-center row">
                 <img [src]='accountDetail._avatar' class="avatar">
+                <br>
+                <p>
+                    {{accountDetail.email}}
+                </p>
             </div>
             <br>
-            <p>e-mail:
-                {{accountDetail.email}}</p>
+            <!--<p>e-mail:-->
+            <!--{{accountDetail.email}}</p>-->
             <p>created at:
                 {{accountDetail._created_at | date: 'dd/MM/yyyy hh:mm'}}
             </p>
+            <p>total of valid tokens: 5
+            </p>
+            <p>groups that account belongs to:
+            </p>
+            <ul>
+                <li>admin</li>
+                <li>geral</li>
+            </ul>
             <br>
             <div class="text-center row">
                 <button [disabled]="accountDetail.email == empty" (click)="deleteUser(accountDetail)" type="button" class="btn btn-link">
