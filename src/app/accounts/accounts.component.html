@@ -38,13 +38,13 @@
 
         <div *ngIf="pages != 1" class="text-center">
 
-            <ul class="pagination pagination-sm">
+            <ul class="pagination">
                 <li [ngClass]="{disabled:page === 1}">
                     <a (click)="getUsers(1)">first page</a>
                 </li>
             </ul>
 
-            <ul  class="pagination pagination-sm">
+            <ul  class="pagination">
                 <li [ngClass]="{disabled:page === 1}">
                     <a (click)="getUsers(page - 1)">
                         <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
@@ -60,7 +60,7 @@
                 </li>
             </ul>
 
-            <ul class="pagination pagination-sm">
+            <ul class="pagination">
                 <li [ngClass]="{disabled:page === pages}">
                     <a (click)="getUsers(pages)">last page</a>
                 </li>
