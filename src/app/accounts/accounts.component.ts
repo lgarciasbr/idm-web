@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import {Md5} from 'ts-md5/dist/md5';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from "@angular/common/src/facade/async";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { AccountsService } from './accounts.service';
 
@@ -30,11 +32,13 @@ export class AccountsComponent implements OnInit{
     public pages;
     public page;
     myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
+    public value = '';
 
     constructor(
         fb: FormBuilder,
         private _service: AccountsService,
         private _router: Router){
+
         this.form = fb.group({
             email: ['', BasicValidators.email],
             password: ['', Validators.required]
@@ -44,8 +48,90 @@ export class AccountsComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.getUsers()
+        this.SearchItem();
         this.form.reset();
+    }
+
+    onKey(event: KeyboardEvent) {
+        this.value = (<HTMLInputElement>event.target).value
+
+        if (this.value.length == 0 || this.value.length >= 3) {
+            this.SearchItem();
+        }
+    }
+
+    SearchItem(page?) {
+        this.accountDetailVisible = false;
+        this.isLoadingVisible = true;
+
+        // If some row was selected.
+        this.selectedRow = null;
+
+        var responseData;
+
+        this._service.SearchItem(this.value, page)
+            .debounceTime(1000)
+            .distinctUntilChanged()
+            .subscribe(
+                data => responseData = data,
+                response => {
+                    if (response.status == 403) {
+                        this.isLoadingVisible = false;
+                        this._router.navigate(['auth', 'logout']);
+                    }
+                    else if (response.status == 500 || response.status == 400) {
+                        this.isLoadingVisible = false;
+                        alert(JSON.parse(response._body).message);
+                    }
+                },
+                () => {
+                    this.GridView(responseData);
+                    console.log(responseData)
+                }
+            )
+    }
+
+    GridView(responseData) {
+        this.accounts = responseData.accounts;
+        this.pages = responseData.pages.pages;
+        this.page = responseData.pages.page;
+        this.isLoadingVisible = false;
+        this.accountDetail = new Account();
+        this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+
+        if (this.pages > 5) {
+            this.pagesArray = new Array(5);
+            var maxPage;
+            var minPage;
+
+            if (this.page >= 4 && this.page + 2 <= this.pages)
+                minPage = this.page - 2;
+            else if (this.page + 2 >= this.pages)
+                minPage = this.pages - 4;
+            else
+                minPage = 1;
+
+            if (this.page < 4)
+                maxPage = 5
+            else if (this.page + 2 < this.pages)
+                maxPage = this.page + 2;
+            else
+                maxPage = this.pages;
+
+            for (var i = 0; i <= 5; i++) {
+                if (minPage <= maxPage)
+                    this.pagesArray[i] = minPage;
+
+                minPage++;
+            }
+        }
+        else {
+            this.pagesArray = new Array(this.pages)
+
+            for (var i = 1; i <= this.pages; i++) {
+                this.pagesArray[i - 1] = i;
+            }
+        }
     }
 
     ShowAddAccount(){
@@ -82,7 +168,7 @@ export class AccountsComponent implements OnInit{
                     this.accountAddVisible = false;
                     // this.accountDetailVisible = true;
                     this.isLoadingVisible = false;
-                    this.getUsers();
+                    this.SearchItem();
                 });
     }
 
@@ -92,72 +178,33 @@ export class AccountsComponent implements OnInit{
         // this.accountDetailVisible = true;
     }
 
-    getUsers(page?){
-        this.accountDetailVisible = false;
-        this.isLoadingVisible = true;
-
-        // If some row was selected.
-        this.selectedRow = null;
-
-        var responseData;
-
-        this._service.getUsers(page)
-            .subscribe(
-                data => responseData = data,
-                response => {
-                    if (response.status == 403) {
-                        this.isLoadingVisible = false;
-                        this._router.navigate(['auth', 'logout']);
-                    }
-                    else if (response.status == 500 || response.status == 400) {
-                        this.isLoadingVisible = false;
-                        alert(JSON.parse(response._body).message);
-                    }
-                },
-                () => {
-                    this.accounts = responseData.accounts;
-                    this.pages = responseData.pages.pages;
-                    this.page = responseData.pages.page;
-                    this.isLoadingVisible = false;
-                    this.accountDetail = new Account();
-                    this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
-
-                    if (this.pages > 5){
-                        this.pagesArray = new Array(5);
-                        var maxPage;
-                        var minPage;
-
-                        if (this.page >= 4 && this.page + 2 <= this.pages)
-                            minPage = this.page - 2;
-                        else if (this.page + 2 >= this.pages)
-                            minPage = this.pages - 4;
-                        else
-                            minPage = 1;
-
-                        if (this.page < 4)
-                            maxPage = 5
-                        else if (this.page + 2 < this.pages)
-                            maxPage = this.page + 2;
-                        else
-                            maxPage = this.pages;
-
-                        for (var i = 0; i <= 5; i++) {
-                            if (minPage <= maxPage)
-                                this.pagesArray[i] = minPage;
-
-                            minPage++;
-                        }
-                    }
-                    else {
-                        this.pagesArray = new Array(this.pages)
-
-                        for (var i = 1; i <= this.pages; i++) {
-                            this.pagesArray[i-1] = i;
-                        }
-                    }
-                }
-            );
-    }
+    // getUsers(page?){
+    //     this.accountDetailVisible = false;
+    //     this.isLoadingVisible = true;
+    //
+    //     // If some row was selected.
+    //     this.selectedRow = null;
+    //
+    //     var responseData;
+    //
+    //     this._service.getUsers(page)
+    //         .subscribe(
+    //             data => responseData = data,
+    //             response => {
+    //                 if (response.status == 403) {
+    //                     this.isLoadingVisible = false;
+    //                     this._router.navigate(['auth', 'logout']);
+    //                 }
+    //                 else if (response.status == 500 || response.status == 400) {
+    //                     this.isLoadingVisible = false;
+    //                     alert(JSON.parse(response._body).message);
+    //                 }
+    //             },
+    //             () => {
+    //                 this.GridView(responseData);
+    //             }
+    //         );
+    // }
 
     getUser(account){
         this.isLoadingVisible = true;
@@ -218,7 +265,7 @@ export class AccountsComponent implements OnInit{
                         this.isLoadingVisible = false;
                         this.accountDetail = new Account();
                         this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
-                        this.getUsers();
+                        this.SearchItem();
                     }
                 )
         }

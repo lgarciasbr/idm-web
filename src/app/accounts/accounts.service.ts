@@ -33,6 +33,12 @@ export class AccountsService {
       .map(res => res.json());
   }
 
+  SearchItem(value?, page?){
+      console.log(value)
+    return this._http.get(this._url + 'search/?email=' + value + '&page=' + page + '&per_page=12', this.GetHeader())
+      .map(res => res.json());
+  }
+
   getUser(account){
     return this._http.get(account._url, this.GetHeader())
       .map(res => res.json());

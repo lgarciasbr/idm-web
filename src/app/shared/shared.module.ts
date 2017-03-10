@@ -12,24 +12,24 @@ import { LocalStorage } from './local.storage.service'
 import { FocusDirective } from './focus.directive'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  declarations: [
-    CollapseDirective,
-    PageNavbarComponent,
-    PageTitleComponent,
-    FocusDirective
-  ],
-  providers: [
-    LocalStorage
-  ],
-  exports: [
-    PageNavbarComponent,
-    PageTitleComponent,
-    FocusDirective
-  ]
+    imports: [
+        CommonModule,
+        RouterModule
+    ],
+    declarations: [
+        CollapseDirective,
+        PageNavbarComponent,
+        PageTitleComponent,
+        FocusDirective
+    ],
+    providers: [
+        LocalStorage
+    ],
+    exports: [
+        PageNavbarComponent,
+        PageTitleComponent,
+        FocusDirective
+    ]
 })
 
 export class SharedModule {
