@@ -24,13 +24,13 @@ var UsersComponent = (function () {
         var _this = this;
         this.loading = true;
         this._service.getUsers(page)
-            .subscribe(function (data) { return _this.accounts = data.accounts; }, null, function () { _this.loading = false; });
+            .subscribe(function (data) { return _this.accounts = data.itemsVO; }, null, function () { _this.loading = false; });
     };
     UsersComponent.prototype.getUser = function (account) {
         var _this = this;
         this.loading = true;
         this.index = this.accounts.indexOf(account);
-        this._usersService.getUser(account)
+        this._usersService.GetItem(account)
             .subscribe(function (data) { return _this.accountDetail = data.account; }, function (response) {
             if (response.status == 404) {
                 _this._router.navigate(['NotFound']);
@@ -40,11 +40,11 @@ var UsersComponent = (function () {
     UsersComponent.prototype.deleteUser = function (accountDetail) {
         var _this = this;
         if (accountDetail.email != null && confirm("Are you sure you want to delete " + accountDetail.email + "?")) {
-            this._service.deleteUser(accountDetail)
+            this._service.DeleteItem(accountDetail)
                 .subscribe(null, function (err) {
                 alert("Could not delete the user.");
-            }, 
-            // var index = this.accounts.indexOf(accountDetail)
+            },
+            // var index = this.itemsVO.indexOf(accountDetail)
             // Here, with the splice method, we remove 1 object
             // at the given index.
             function () {

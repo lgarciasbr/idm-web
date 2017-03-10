@@ -14,7 +14,7 @@ var UsersService = (function () {
         // let authToken = localStorage.getItem('auth_token');
         // private _url = "http://127.0.0.1:5000/accounts/";
         // https://lgidm.herokuapp.com/accounts/?page=1&per_page=10
-        this._url = "https://lgidm.herokuapp.com/accounts/";
+        this._url = "https://lgidm.herokuapp.com/itemsVO/";
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'ver': '1',

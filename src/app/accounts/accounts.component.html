@@ -10,7 +10,7 @@
         </div>
 
         <div class="navbar-right">
-            <button  (click)="ShowAddAccount()" class="btn btn-link">
+            <button (click)="ShowAddItem()" class="btn btn-link">
                 <i class="glyphicon glyphicon-user" aria-hidden="true"></i> add new account
             </button>
             <button  (click)="SearchItem()" class="btn btn-link">
@@ -27,10 +27,10 @@
 
         <table class="table table-hover table-condensed">
             <tbody>
-            <tr *ngFor="let account of accounts, let i=index"
-                (click)="getUser(account)">
+            <tr *ngFor="let item of itemsVO, let i=index"
+                (click)="GetItem(item)">
                 <td [ngClass]="{'active': i == selectedRow, 'clickable': true}">
-                    {{ account.email }}
+                    {{ item.email }}
                 </td>
             </tr>
             </tbody>
@@ -72,21 +72,21 @@
 
     <div class="col-md-5 col-sm-5 col-lg-5">
 
-        <div *ngIf="accountDetailVisible" id="DivDetails" [focus]="myFocusTriggeringEventEmitter">
+        <div *ngIf="itemDetailVisible" id="DivDetails" [focus]="myFocusTriggeringEventEmitter">
             <!--<h4>Account Details</h4>-->
             <br>
             <div class="text-center row">
-                <img [src]='accountDetail._avatar' class="avatar">
+                <img [src]='itemVO._avatar' class="avatar">
                 <br>
                 <p>
-                    {{accountDetail.email}}
+                    {{itemVO.email}}
                 </p>
             </div>
             <br>
             <!--<p>e-mail:-->
             <!--{{accountDetail.email}}</p>-->
             <p>created at:
-                {{accountDetail._created_at | date: 'dd/MM/yyyy hh:mm'}}
+                {{itemVO._created_at | date: 'dd/MM/yyyy hh:mm'}}
             </p>
             <p>total of valid tokens: 5
             </p>
@@ -98,33 +98,33 @@
             </ul>
             <br>
             <div class="text-center row">
-                <button [disabled]="accountDetail.email == empty" (click)="deleteUser(accountDetail)" type="button" class="btn btn-link">
+                <button [disabled]="itemVO.email == empty" (click)="DeleteItem(itemVO)" type="button" class="btn btn-link">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> delete this account
                 </button>
             </div>
         </div>
 
-        <div *ngIf="accountAddVisible">
+        <div *ngIf="itemAddVisible">
             <h4>Add Account</h4>
-            <form [formGroup]="form" (ngSubmit)="Save()">
+            <form [formGroup]="form" (ngSubmit)="SaveItem()">
                 <fieldset>
                     <div class="form-group">
                         <label class="sr-only">e-mail:</label>
-                        <input [(ngModel)]="accountDetail.email" #email [focus]="myFocusTriggeringEventEmitter" placeholder="e-mail" formControlName="email" type="text" class="form-control">
+                        <input [(ngModel)]="itemVO.email" #email [focus]="myFocusTriggeringEventEmitter" placeholder="e-mail" formControlName="email" type="text" class="form-control">
                         <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
                             Please type a valid email.
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="sr-only">password:</label>
-                        <input [(ngModel)]="accountDetail.password" formControlName="password" placeholder="password" type="password" class="form-control">
+                        <input [(ngModel)]="itemVO.password" formControlName="password" placeholder="password" type="password" class="form-control">
                     </div>
                 </fieldset>
                 <div class="text-center row">
                     <button [disabled]="!form.valid" type="submit" class="btn btn-link">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Add
                     </button>
-                    <button (click)="Cancel()" type="cancel" class="btn btn-link">
+                    <button (click)="CancelItem()" type="cancel" class="btn btn-link">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
                     </button>
                 </div>

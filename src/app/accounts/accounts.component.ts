@@ -23,11 +23,11 @@ export class AccountsComponent implements OnInit{
     public subTitle = 'Manage your accounts.';
     public isLoadingVisible = false;
     public selectedRow = null;
-    form: FormGroup;
-    accountAddVisible = false;
-    accountDetailVisible = false;
-    accountDetail = new Account();
-    public accounts: any[];
+    public form: FormGroup;
+    public itemAddVisible = false;
+    public itemDetailVisible = false;
+    public itemVO = new Account();
+    public itemsVO: any[];
     public pagesArray: any[];
     public pages;
     public page;
@@ -44,7 +44,7 @@ export class AccountsComponent implements OnInit{
             password: ['', Validators.required]
         });
 
-        this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+        this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
     }
 
     ngOnInit(){
@@ -61,7 +61,7 @@ export class AccountsComponent implements OnInit{
     }
 
     SearchItem(page?) {
-        this.accountDetailVisible = false;
+        this.itemDetailVisible = false;
         this.isLoadingVisible = true;
 
         // If some row was selected.
@@ -92,12 +92,12 @@ export class AccountsComponent implements OnInit{
     }
 
     GridView(responseData) {
-        this.accounts = responseData.accounts;
+        this.itemsVO = responseData.accounts;
         this.pages = responseData.pages.pages;
         this.page = responseData.pages.page;
         this.isLoadingVisible = false;
-        this.accountDetail = new Account();
-        this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+        this.itemVO = new Account();
+        this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
 
         if (this.pages > 5) {
             this.pagesArray = new Array(5);
@@ -134,23 +134,23 @@ export class AccountsComponent implements OnInit{
         }
     }
 
-    ShowAddAccount(){
+    ShowAddItem(){
         // If some row was selected.
         this.selectedRow = null;
-        this.accountDetail = new Account();
-        this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+        this.itemVO = new Account();
+        this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
         this.form.reset();
 
-        this.accountDetailVisible = false;
-        this.accountAddVisible = true;
+        this.itemDetailVisible = false;
+        this.itemAddVisible = true;
 
         this.myFocusTriggeringEventEmitter.emit(true);
     }
 
-    Save(){
+    SaveItem(){
         this.isLoadingVisible = true;
 
-        this._service.addUser(this.accountDetail)
+        this._service.addUser(this.itemVO)
             .subscribe(
                 null,
                 response => {
@@ -165,58 +165,28 @@ export class AccountsComponent implements OnInit{
                 },
                 () => {
                     this.form.reset();
-                    this.accountAddVisible = false;
-                    // this.accountDetailVisible = true;
+                    this.itemAddVisible = false;
                     this.isLoadingVisible = false;
                     this.SearchItem();
                 });
     }
 
-    Cancel(){
+    CancelItem(){
         this.form.reset();
-        this.accountAddVisible = false;
-        // this.accountDetailVisible = true;
+        this.itemAddVisible = false;
     }
 
-    // getUsers(page?){
-    //     this.accountDetailVisible = false;
-    //     this.isLoadingVisible = true;
-    //
-    //     // If some row was selected.
-    //     this.selectedRow = null;
-    //
-    //     var responseData;
-    //
-    //     this._service.getUsers(page)
-    //         .subscribe(
-    //             data => responseData = data,
-    //             response => {
-    //                 if (response.status == 403) {
-    //                     this.isLoadingVisible = false;
-    //                     this._router.navigate(['auth', 'logout']);
-    //                 }
-    //                 else if (response.status == 500 || response.status == 400) {
-    //                     this.isLoadingVisible = false;
-    //                     alert(JSON.parse(response._body).message);
-    //                 }
-    //             },
-    //             () => {
-    //                 this.GridView(responseData);
-    //             }
-    //         );
-    // }
-
-    getUser(account){
+    GetItem(account){
         this.isLoadingVisible = true;
 
-        this.accountAddVisible = false;
-        this.accountDetailVisible = true;
+        this.itemAddVisible = false;
+        this.itemDetailVisible = true;
 
-        this.selectedRow = this.accounts.indexOf(account);
+        this.selectedRow = this.itemsVO.indexOf(account);
 
         this._service.getUser(account)
             .subscribe(
-                data => this.accountDetail = data.account,
+                data => this.itemVO = data.account,
                 response => {
                     if (response.status == 404) {
                         this.isLoadingVisible = false;
@@ -232,14 +202,14 @@ export class AccountsComponent implements OnInit{
                     }
                 },
                 () => {
-                    this.accountDetail._avatar = "https://www.gravatar.com/avatar/" + Md5.hashStr(this.accountDetail.email.toLowerCase()) + "?d=mm";
+                    this.itemVO._avatar = "https://www.gravatar.com/avatar/" + Md5.hashStr(this.itemVO.email.toLowerCase()) + "?d=mm";
                     this.isLoadingVisible = false;
                     window.location.hash ='DivDetails';
                 }
             );
     }
 
-    deleteUser(accountDetail){
+    DeleteItem(accountDetail){
         if (accountDetail.email != null &&
             confirm("Are you sure you want to delete " + accountDetail.email + "?")) {
             this.isLoadingVisible = true;
@@ -263,8 +233,8 @@ export class AccountsComponent implements OnInit{
                     },
                     () => {
                         this.isLoadingVisible = false;
-                        this.accountDetail = new Account();
-                        this.accountDetail._avatar = "https://www.gravatar.com/avatar/?d=mm";
+                        this.itemVO = new Account();
+                        this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
                         this.SearchItem();
                     }
                 )
