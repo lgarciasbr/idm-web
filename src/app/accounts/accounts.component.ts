@@ -6,10 +6,10 @@ import { EventEmitter } from "@angular/common/src/facade/async";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { AccountsService } from './accounts.service';
+import { AccountsService } from '../../providers/accounts.service';
+import { Account } from '../../providers/account'
 
 import { BasicValidators } from '../shared/basic.validators';
-import { Account } from './account'
 
 import any = jasmine.any;
 
@@ -86,7 +86,6 @@ export class AccountsComponent implements OnInit{
                 },
                 () => {
                     this.GridView(responseData);
-                    console.log(responseData)
                 }
             )
     }
@@ -99,26 +98,26 @@ export class AccountsComponent implements OnInit{
         this.itemVO = new Account();
         this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
 
-        if (this.pages > 5) {
-            this.pagesArray = new Array(5);
+        if (this.pages > 3) {
+            this.pagesArray = new Array(3);
             var maxPage;
             var minPage;
 
-            if (this.page >= 4 && this.page + 2 <= this.pages)
-                minPage = this.page - 2;
-            else if (this.page + 2 >= this.pages)
-                minPage = this.pages - 4;
+            if (this.page >= 2 && this.page + 1 <= this.pages)
+                minPage = this.page - 1;
+            else if (this.page + 1 >= this.pages)
+                minPage = this.pages - 2;
             else
                 minPage = 1;
 
-            if (this.page < 4)
-                maxPage = 5
-            else if (this.page + 2 < this.pages)
-                maxPage = this.page + 2;
+            if (this.page < 2)
+                maxPage = 3
+            else if (this.page + 1 < this.pages)
+                maxPage = this.page + 1;
             else
                 maxPage = this.pages;
 
-            for (var i = 0; i <= 5; i++) {
+            for (var i = 0; i <= 3; i++) {
                 if (minPage <= maxPage)
                     this.pagesArray[i] = minPage;
 
@@ -150,7 +149,7 @@ export class AccountsComponent implements OnInit{
     SaveItem(){
         this.isLoadingVisible = true;
 
-        this._service.addUser(this.itemVO)
+        this._service.AddItem(this.itemVO)
             .subscribe(
                 null,
                 response => {
@@ -184,7 +183,7 @@ export class AccountsComponent implements OnInit{
 
         this.selectedRow = this.itemsVO.indexOf(account);
 
-        this._service.getUser(account)
+        this._service.GetItem(account)
             .subscribe(
                 data => this.itemVO = data.account,
                 response => {
@@ -209,17 +208,17 @@ export class AccountsComponent implements OnInit{
             );
     }
 
-    DeleteItem(accountDetail){
-        if (accountDetail.email != null &&
-            confirm("Are you sure you want to delete " + accountDetail.email + "?")) {
+    DeleteItem(item){
+        if (item.email != null &&
+            confirm("Are you sure you want to delete " + item.email + "?")) {
             this.isLoadingVisible = true;
 
-            this._service.deleteUser(accountDetail)
+            this._service.DeleteItem(item)
                 .subscribe(null,
                     response => {
                         if (response.status == 404) {
                             this.isLoadingVisible = false;
-                            alert("Could not delete the account.");
+                            alert("Could not delete.");
                         }
                         else if (response.status == 403) {
                             this.isLoadingVisible = false;
@@ -235,7 +234,7 @@ export class AccountsComponent implements OnInit{
                         this.isLoadingVisible = false;
                         this.itemVO = new Account();
                         this.itemVO._avatar = "https://www.gravatar.com/avatar/?d=mm";
-                        this.SearchItem();
+                        this.SearchItem(this.page);
                     }
                 )
         }

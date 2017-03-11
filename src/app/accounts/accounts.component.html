@@ -20,7 +20,7 @@
 
         <br>
 
-        <input (keyup)="onKey($event)" type="text" class="form-control">
+        <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Search for...">
 
         <br>
         <br>
@@ -38,31 +38,37 @@
 
         <div *ngIf="pages > 1" class="text-center">
 
-            <ul class="pagination">
+            <ul class="pagination pagination-sm">
                 <li [ngClass]="{disabled:page === 1}">
-                    <a (click)="SearchItem(1)">first page</a>
+                    <a (click)="page > 1 && SearchItem(1)">first</a>
                 </li>
             </ul>
 
-            <ul  class="pagination">
+            <ul  class="pagination pagination-sm">
+                <!--<li [ngClass]="{disabled:page === 1}">-->
+                <!--<a (click)="page > 1 && SearchItem(1)">first</a>-->
+                <!--</li>-->
                 <li [ngClass]="{disabled:page === 1}">
-                    <a (click)="SearchItem(page - 1)">
+                    <a (click)="page > 1 && SearchItem(page - 1)">
                         <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                     </a>
                 </li>
                 <li *ngFor="let pageNumber of pagesArray" [ngClass]="{active:page === pageNumber}">
-                    <a (click)="SearchItem(pageNumber)">{{pageNumber}}</a>
+                    <a (click)="page != pageNumber && SearchItem(pageNumber)">{{pageNumber}}</a>
                 </li>
                 <li [ngClass]="{disabled:page === pages}">
-                    <a (click)="SearchItem(page + 1)">
+                    <a (click)="page != pages && SearchItem(page + 1)">
                         <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
                     </a>
                 </li>
+                <!--<li [ngClass]="{disabled:page === pages}">-->
+                <!--<a (click)="page != pages && SearchItem(pages)">last</a>-->
+                <!--</li>-->
             </ul>
 
-            <ul class="pagination">
+            <ul class="pagination pagination-sm">
                 <li [ngClass]="{disabled:page === pages}">
-                    <a (click)="SearchItem(pages)">last page</a>
+                    <a (click)="page != pages && SearchItem(pages)">last</a>
                 </li>
             </ul>
 
@@ -83,8 +89,6 @@
                 </p>
             </div>
             <br>
-            <!--<p>e-mail:-->
-            <!--{{accountDetail.email}}</p>-->
             <p>created at:
                 {{itemVO._created_at | date: 'dd/MM/yyyy hh:mm'}}
             </p>

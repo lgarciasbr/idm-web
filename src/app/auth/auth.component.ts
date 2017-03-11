@@ -6,7 +6,7 @@ import { EventEmitter } from "@angular/common/src/facade/async";
 import { environment } from '../../environments/environment';
 
 import { BasicValidators } from '../shared/basic.validators';
-import { Account } from '../accounts/account'
+import { Account } from '../../providers/account'
 
 import { LocalStorage } from '../shared/local.storage.service';
 

@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { LocalStorage } from '../shared/local.storage.service';
+import { LocalStorage } from '../app/shared/local.storage.service';
 
 @Injectable()
 export class AccountsService {
@@ -28,29 +28,28 @@ export class AccountsService {
     return options
   }
 
-  getUsers(page?){
+  GetItems(page?){
     return this._http.get(this._url + '?page=' + page + '&per_page=12', this.GetHeader())
       .map(res => res.json());
   }
 
   SearchItem(value?, page?){
-      console.log(value)
     return this._http.get(this._url + 'search/?email=' + value + '&page=' + page + '&per_page=12', this.GetHeader())
       .map(res => res.json());
   }
 
-  getUser(account){
-    return this._http.get(account._url, this.GetHeader())
+  GetItem(item){
+    return this._http.get(item._url, this.GetHeader())
       .map(res => res.json());
   }
 
-  addUser(account){
-    return this._http.post(this._url, JSON.stringify(account), this.GetHeader())
+  AddItem(item){
+    return this._http.post(this._url, JSON.stringify(item), this.GetHeader())
       .map(res => res.json());
   }
 
-  deleteUser(account){
-    return this._http.delete(account._url, this.GetHeader())
+  DeleteItem(item){
+    return this._http.delete(item._url, this.GetHeader())
       .map(res => res.json());
   }
 

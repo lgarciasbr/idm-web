@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { AccountsComponent } from './accounts.component';
 
-import { AccountsService } from './accounts.service';
+import { AccountsService } from '../../providers/accounts.service';
 
 @NgModule({
     imports: [

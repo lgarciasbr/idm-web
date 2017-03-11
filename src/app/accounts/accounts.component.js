@@ -23,7 +23,7 @@ var UsersComponent = (function () {
     UsersComponent.prototype.getUsers = function (page) {
         var _this = this;
         this.loading = true;
-        this._service.getUsers(page)
+        this._service.GetItems(page)
             .subscribe(function (data) { return _this.accounts = data.itemsVO; }, null, function () { _this.loading = false; });
     };
     UsersComponent.prototype.getUser = function (account) {
