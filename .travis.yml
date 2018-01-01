@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "8.9.1"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - npm install -g @angular/cli
+  - npm install
+
+script:
+  - ng build --prod
+
+deploy:
+  provider: s3
+  access_key_id: $access_key_id
+  secret_access_key: $secret_access_key
+  bucket: $bucket
+  local_dir: dist
+  acl: public_read
+
+notifications:
+  slack: $slack
