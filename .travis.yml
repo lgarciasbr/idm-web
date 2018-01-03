@@ -12,6 +12,7 @@ before_script:
 
 script:
   - ng build --env=prod
+  - ls -la
 
 deploy:
   provider: s3
